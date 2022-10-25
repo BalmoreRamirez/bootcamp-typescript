@@ -1,160 +1,211 @@
-console.log('hello mundo')
+// funciones
+import {log} from "util";
 
-// variables
-
-var nombre: string = "jose"
-let correo: string = "jose@gmail.com" //variable local
-const PI: number = 3.141592
-let apellido: any = "maria" //Para cambiar el calor. pero no se recomienda a hacerlo
-var error: boolean = true
-
-
-console.log("mi nombre " + nombre)
-console.log(`mi correo  ${correo}`)
-
-// Declaracion multiple
-let a: string, b: boolean, c: number
-
-a = "jose"
-b = false
-c = 8
-
-let tarea: string[] = ["tarea", "hola"]
-let valores: (string | number | boolean)[] = ["jose", 74, false]
-
-
-enum Estados {
-    "completo" = "c",
-    "incompleto" = "i",
-    "pendiente" = "p"
+/**
+ * funcion que muestra un saludo por consola
+ */
+function saludar() {
+    let nombre = "jose"
+    console.log(`Hola ${nombre}`)
 }
 
-let estadoTarea: Estados = Estados.completo
+saludar()
 
-
-// Interface
-interface Tarea {
-    nombre: string,
-    estado: Estados,
-    urgencia: number
+/**
+ * muestra un mensaje a una persona
+ * @param nombre Nombre de la persona en consola
+ */
+function saludarPersona(nombre: string) {
+    console.log(`Hola ${nombre}`)
 }
 
-let tarea1: Tarea = {
-    nombre: "tarea 1",
-    estado: Estados.pendiente,
-    urgencia: 10
+const persoma = "jose"
+saludarPersona("jose")
+
+function despedirPersona(nombre: string) {
+    console.log(`adio ${nombre}`)
 }
 
+despedirPersona('pepe')
 
-// Types de typescript, defino los tipos de datos más estrictos
-type Prodcuto = {
-    precio: number,
-    nombre: string
-}
-// asignacion multiple de variable
-
-let mitarea = {
-    titulo: "si",
-    estado: Estados.completo,
-    urgencia: 1
-}
-// declaracion 1 a 1
-let miTitulo = mitarea.titulo
-let miEstado = mitarea.estado
-let miuRGENCIA = mitarea.urgencia
-
-// declaracion con factor de propagacion
-let {titulo, estado, urgencia} = mitarea
-
-
-// en listas
-let listaCompra: string[] = ["cafe", "leche", "pan"]
-let listaCompraLunes: string[] = [...listaCompra, "dulce", "miel"]
-let lsitacompraseman = [...listaCompraLunes, ...listaCompra]
-
-// en onjetos
-let estadoApp = {
-    usuario: "admin",
-    session: 3,
-    jwt: "hjajus"
-}
-let nuevoEstado = {
-    ...estadoApp,
-    session: 4
-}
-
-let coche: Prodcuto = {
-    nombre: "jose",
-    precio: 5000
-}
-
-//condicionales
-if (error) {
-    console.log("Hay un error")
-} else {
-    console.log("noa hy un error ")
-}
-//switch
-
-switch (tarea1.estado) {
-    case Estados.completo:
-        break
-    case Estados.incompleto:
-        break
-    case Estados.pendiente:
-        break
-    default:
-        break
-}
-
-// bucles-
-let listaTaraNueva: Tarea[] = [
-    {
-        nombre: "hacer pan",
-        estado: Estados.completo,
-        urgencia: 2
-    },
-    {
-        nombre: "hacer desayuno",
-        estado: Estados.incompleto,
-        urgencia: 2
-    },
-    {
-        nombre: "hacer cafe",
-        estado: Estados.pendiente,
-        urgencia: 2
-    }
-]
-
-// for clasico
-for (let index = 0; index < listaTaraNueva.length; index++) {
-    const tarea = listaTaraNueva[index]
-    console.log(`${index}-${tarea.nombre}`)
-}
-
-
-// foreach
-listaTaraNueva.forEach(
-    (tarea: Tarea, index: number) => {
-        console.log(`${index}-${tarea.nombre}`)
-    }
-)
-
-//for, forin, forEach
-
-// bucles while- mientras la condicion sea verdad
-while (tarea1.estado !== Estados.completo) {
-    tarea1.urgencia++;
-    if (tarea1.urgencia == 5) {
-        tarea1.estado = Estados.completo
-        break
+function despedirPersonaOpcional(nombre?: string) {
+    if (nombre) {
+        console.log(`adios ${nombre}`)
     } else {
-        tarea1.urgencia++
+        console.log('salu')
     }
 }
 
-// do while se ejecuta solo una vez
-do {
-    tarea1.urgencia++
-    tarea1.estado = Estados.completo
-} while (tarea1.estado !== Estados.completo)
+despedirPersonaOpcional() //adios
+despedirPersonaOpcional('mario') //adios mario
+
+function variosParam(nombre: string, apellido?: string, edad: number = 18) {
+    if (apellido) {
+        console.log(`${apellido}-${nombre}-${edad}`)
+    } else {
+        console.log(`${nombre}-${edad}`)
+    }
+
+}
+
+
+variosParam('martin') //martin tiene 18 años
+variosParam('martin', 'ramirez') //martin ramirez tiene 18 años
+//variosParam(nombre = "balmore", apellido = "mendez", edad = 23)
+function ejemploVariosTipo(a: string | number) {
+    if (typeof (a) === 'string') {
+        console.log('a es un string')
+    } else if (typeof (a) === 'number') {
+        console.log('a es un number')
+    } else {
+        console.log(' a no es un string')
+    }
+}
+
+
+ejemploVariosTipo('hola')
+ejemploVariosTipo(2)
+
+// funciones anonimas
+/**
+ *
+ * @param nombre nombre de la persona
+ * @param apellidos apellido de la perosna
+ * @return nombre completo de la persona
+ */
+function ejemploRetunr(nombre: string, apellidos: string): string | number {
+    return `${nombre} ${apellidos}`
+
+}
+
+const nombreCompleto = ejemploRetunr('jose', 'balmore')
+console.log(nombreCompleto)
+
+
+/**
+ *
+ * @param nombres es una lista de nombres de string
+ */
+function ejemploMultiParam(...nombres: string[]) {
+    nombres.forEach((nombre) => {
+        console.log(nombre)
+    })
+
+}
+
+ejemploMultiParam('ariela')
+ejemploMultiParam('jose', 'maria', 'martin', 'marta')
+
+const lista = ['jose', 'alberto', 'lucia']
+ejemploMultiParam(...lista)
+
+
+function ejemploListaParam(nombres: string[]) {
+    nombres.forEach((nombre) => {
+        console.log(nombre)
+    })
+
+}
+
+ejemploListaParam(lista)
+
+
+// arrow function
+
+
+type Empleado = {
+    nombre: string,
+    apellidos: string,
+    edad: number
+}
+let empleadoMartin: Empleado = {
+    nombre: 'jose',
+    apellidos: 'lopez',
+    edad: 20
+}
+
+const mostrarEmpleado = (empleado: Empleado): string => `${empleado.nombre} tiene ${empleado.edad} años`
+
+//llamar a la funcion
+mostrarEmpleado(empleadoMartin)
+
+const datosEmpleado = (empleado: Empleado): string => {
+    if (empleado.edad > 20) {
+        return `empleado ${empleado.nombre} esta en edad de jubilacion`
+    } else {
+        return `empleado ${empleado.nombre} esta en edad laboraral`
+    }
+}
+
+
+datosEmpleado(empleadoMartin) //empleado martin esta en edad laboral
+
+
+const obtenerSalario = (empleado: Empleado, cobrar: () => string) => {
+    if (empleado.edad > 20) {
+        return
+    } else {
+        return cobrar() // callback ejecutar
+    }
+}
+
+
+const cobrarEmpleado = (emmpleado: Empleado) => {
+    console.log(`${emmpleado.nombre} cobra su salario`)
+}
+
+obtenerSalario(empleadoMartin, () => 'cobrar martin')
+
+// async functions
+async function ejemploAsync(): Promise<string> {
+    // await
+    await console.log('tarea a completar antes de guir con la secuencia de instruciones')
+    console.log('tarea completada ')
+    return 'completado'
+}
+
+ejemploAsync().then((respuesta) => {
+    console.log('respuesta', respuesta)
+}).catch((err) => {
+    console.log(err)
+}).finally(() => {
+    console.log('todo a terminado')
+})
+
+// funciones generators
+function* ejemploGnerate() {
+    // yield (ejecutar un funcion )
+    let index = 0
+    while (index < 5) {
+        yield index++
+    }
+}
+
+// guardamos la funcion en una variable
+
+let generadora = ejemploGnerate()
+
+// accedemos a los valores
+console.log(generadora.next().value)  // accedemos al valor, 0
+console.log(generadora.next().value)  // accedemos al valor, 1
+console.log(generadora.next().value)  // accedemos al valor, 2
+
+// worker
+
+function* watcher(valor: number) {
+    yield valor //emitimos el valor inicial
+    yield* worker(valor)  // llamamos a las emisiones del worker para que imita otros calores
+    yield valor + 4 //emitimos el valor final + 4
+}
+
+function* worker(valor: number) {
+    yield valor + 1
+    yield valor + 2
+    yield valor + 3
+}
+
+let generatorSaga = watcher(0)
+console.log(generatorSaga.next().value) //0 (lo ha hecho el watcher)
+console.log(generatorSaga.next().value) //1(lo ha hecho el watcher)
+console.log(generatorSaga.next().value) //2 (lo ha hecho el watcher)
+console.log(generatorSaga.next().value) //3 (lo ha hecho el watcher)
