@@ -1,83 +1,35 @@
-// sobre carga de funciones
+import {CONNREFUSED} from "dns";
+import {Estudiante} from "./models/Estudiante";
+import {Curso} from "./models/Curso";
+import {LISTA_CURSOS} from "./mock/cursos.mock";
 
 
-import {deleteAllCookies, deleteCookie, getCookieValue, setCookie} from "cookies-utils";
+// creamos un curso
 
-function mostrarError(error: string): void {
-    console.log("hay un error", error)
-}
+// const cursoTS = new Curso('Ts', 15)
+// const cursoJS = new Curso('JS', 20)
 
-// podemos almacenar muchos datos
-// eventos y persistencia de datos en el navegador
+// const listaCurso: Curso[] = []
+// listaCurso.push(cursoTS, cursoJS) // lista de cursos
+const listaCurso: Curso[] = LISTA_CURSOS
 
-// 1 - LocalStorage -> alamacena los datos en el navegador (no se eliminnan automaticamente)
-// 2 - SessionStorage -> la diderencia radica en la session de navegador es decir los datos se persiste en la sesion
-// en la session del navegador
-// 3 - Cookie -> tiene una fecha de caducidad  y tambien tiene un ambito de url
+// creamos estudiante
+const martin: Estudiante = new Estudiante('jose', listaCurso, 'ramirez')
 
-// LocalStorage
+console.log(`${martin.nombre} estudia`)
+// itermos por cada uno de ellos
+martin.cursos.forEach((curso: Curso) => {
+    console.log(`${curso.nombre} ${curso.horas}`)  // typescript 15 horas
+})
 
-// function guardarEnLocalStorage():void{
-//     localStorage.set('nombre')
-// }
+const cursoAngular: Curso = new Curso('angular', 40)
+martin.cursos.push(cursoAngular)
 
-// Cookie
+// conocer horas estudiadas
+martin.horasEstudiadas // number
 
-const cookieOptions = {
-    name: "usuario", // string,
-    value: "Martin", // string,
-    maxAge: 10 * 60, // optional number (value in seconds),
-    expires: new Date(2099, 10, 1), // optional Date,
-    path: "/", // optional string
-};
-
-// setemao la cookie
-setCookie(cookieOptions);
-
-// ller una cookie
-let cookieleida = getCookieValue('usuario')
-// eliminar
-deleteCookie("usuario")
-
-// eliminar todas las cookies
-deleteAllCookies()
-
-
-// clase temporizador
-
-class Temporizador {
-    public terminar?: (tiempo: number) => void
-
-    public empezar(): void {
-        setTimeout(() => {
-
-            // comporbar que existe la funcion terminar como callback
-            if (!this.terminar) return
-
-            // cuando hay pasado el tiempo se ejecutará la funcion terminar
-            this.terminar(Date.now())
-        }, 1000)
-    }
-}
-
-
-const miTemporizador: Temporizador = new Temporizador()
-
-// definemos la funcion del callback  ejecutar cuando termine el tiempo
-
-miTemporizador.terminar = (tiempo: number) => {
-    console.log('evento terminado es : ', tiempo)
-}
-
-// lanzamos el temporizador
-miTemporizador.empezar() // se inicia el timeout y cuando termine se ejecuta la funcion terminar()
-
-setInterval(() => console.log('Tic'), 1000)
-
-// eliminar la ejecucion de la funcion
-delete miTemporizador.terminar;
-
-
-
-
+martin.ID_estudiante
+// saber la instancia de un objeto/variable
+// typeof
+// instanceOf
 
